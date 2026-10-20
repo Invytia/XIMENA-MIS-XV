@@ -12,16 +12,15 @@
             --pink-1: #ffedf2;
             --pink-2: #ffdce6;
             --pink-3: #fabbcc;
-            --main-primary: #f4a6be; /* Rosa Pastel */
-            --main-primary-deep: #9e5b68; /* Tono similar al reproductor de la imagen */
-            
-            /* Tonos de transición Rose Gold */
+            --main-primary: #f4a6be;
+            --main-primary-deep: #9e5b68;
+
             --rg-1: #fbf5f4;
             --rg-2: #ecd9d6;
             --rg-3: #d9aba3;
-            --main-secondary: #c58f87; /* Rose Gold Medio */
+            --main-secondary: #c58f87;
             --secondary-light: #e6c8c3;
-            
+
             --text-dark: #5c3c45;
             --text-muted: #9a767f;
             --white: #fffdfc;
@@ -29,6 +28,9 @@
             --glow-gold: rgba(197, 143, 135, 0.5);
             --frame-pad: 16px;
             --frame-pad-top: 30px;
+            --leaf: #a9c2a0;
+            --leaf-deep: #8fae8a;
+            --lilac: #cdb8e6;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -58,7 +60,7 @@
             transition: opacity 1.2s ease-in-out, visibility 1.2s;
             overflow: hidden;
         }
-        
+
         #envelope-screen::before {
             content: '';
             position: absolute;
@@ -152,33 +154,53 @@
         }
         body.content-active #main-invitation { opacity: 1; transform: translateY(0); }
 
+        /* --- MARCO PRINCIPAL ESTILO PAPEL CON FLORES ACUARELA --- */
         .invitation-frame {
             max-width: 560px; width: 100%; position: relative; text-align: center;
-            background: linear-gradient(170deg, #fffdfb 0%, #fff6f9 45%, #fcf7f6 100%);
+            background: linear-gradient(170deg, #fffdfb 0%, #fff8f6 50%, #fcf6f4 100%);
             box-shadow: 0 15px 55px rgba(183, 110, 121, 0.22); margin-bottom: 40px; z-index: 3;
             border-radius: 26px; padding: 40px 18px 30px; overflow: hidden;
         }
-        
-        .invitation-frame::before, .invitation-frame::after {
-            content: ''; position: absolute; border-radius: 50%; filter: blur(4px); z-index: 0; opacity: 0.55;
-        }
-        .invitation-frame::before { width: 180px; height: 180px; background: radial-gradient(circle, var(--pink-3), transparent 70%); top: -70px; left: -60px; }
-        .invitation-frame::after { width: 220px; height: 220px; background: radial-gradient(circle, var(--rg-3), transparent 70%); bottom: -80px; right: -70px; }
-        .invitation-frame > * { position: relative; z-index: 1; }
 
         .frame-inner-border {
-            border: 1.5px solid; border-image: linear-gradient(135deg, var(--main-secondary), var(--main-primary), var(--main-secondary)) 1;
+            border: 1px solid rgba(197, 143, 135, 0.55);
             border-radius: 20px; padding: 10px var(--frame-pad); position: relative; z-index: 1; overflow: hidden;
+            box-shadow: inset 0 0 0 5px rgba(255, 253, 252, 0.6), inset 0 0 0 6px rgba(197, 143, 135, 0.22);
         }
 
-        /* --- HERO HEADER ESTILO IMAGEN --- */
+        /* Flores en esquinas (se insertan con JS) */
+        .flora {
+            position: absolute; width: var(--fs, 120px); height: var(--fs, 120px);
+            pointer-events: none; z-index: -1;
+        }
+        .flora.tl { top: 0; left: 0; }
+        .flora.tr { top: 0; right: 0; transform: scaleX(-1); }
+        .flora.bl { bottom: 0; left: 0; transform: scaleY(-1); }
+        .flora.br { bottom: 0; right: 0; transform: scale(-1, -1); }
+        .invitation-frame > .flora { --fs: 150px; opacity: 0.95; }
+        .section-card > .flora { --fs: 84px; opacity: 0.9; }
+
+        /* --- HERO: ARCO DE FLORES + BOLAS DISCO --- */
         .hero-header {
-            padding: 40px 10px 20px;
+            padding: 10px 0 20px;
             text-align: center;
             position: relative;
             z-index: 2;
         }
-        
+
+        .hero-arch {
+            position: relative;
+            max-width: 380px;
+            margin: 0 auto 10px;
+            padding-top: 24%;
+        }
+        .arch-svg {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: auto; display: block;
+            pointer-events: none; z-index: 0;
+        }
+        .hero-arch > .hero-script, .hero-arch > .hero-name-main { position: relative; z-index: 1; }
+
         .hero-script {
             font-family: 'Pinyon Script', cursive;
             font-size: clamp(38px, 10vw, 45px);
@@ -186,10 +208,10 @@
             margin-bottom: -5px;
             line-height: 1;
         }
-        
+
         .hero-name-main {
             font-family: 'Cinzel', serif;
-            font-size: clamp(45px, 13vw, 65px);
+            font-size: clamp(38px, 11vw, 56px);
             font-weight: 400;
             color: var(--main-primary-deep);
             letter-spacing: 2px;
@@ -198,13 +220,49 @@
             text-transform: uppercase;
         }
 
-        /* --- MINI REPRODUCTOR ESTILO IMAGEN --- */
+        /* Bolas disco colgantes */
+        .disco {
+            position: absolute; top: -10px; z-index: 3;
+            display: flex; flex-direction: column; align-items: center;
+            transform-origin: top center;
+            animation: sway 4.5s ease-in-out infinite alternate;
+            animation-delay: var(--d, 0s);
+            pointer-events: none;
+        }
+        .disco.l { left: var(--x, 0); }
+        .disco.r { right: var(--x, 0); }
+        .disco::before {
+            content: ''; width: 1px; height: var(--l, 50px);
+            background: linear-gradient(to bottom, rgba(197,143,135,0.2), var(--main-secondary));
+        }
+        .disco .ball {
+            width: var(--s, 40px); height: var(--s, 40px); border-radius: 50%;
+            position: relative; overflow: hidden;
+            background: radial-gradient(circle at 32% 28%, #ffffff 0, #fbe3ea 22%, #d9a0b0 58%, #8a4b5a 100%);
+            box-shadow: 0 6px 14px rgba(158, 91, 104, 0.35), 0 0 16px rgba(250, 187, 204, 0.6);
+        }
+        .disco .ball::before {
+            content: ''; position: absolute; inset: 0; border-radius: 50%;
+            background:
+                repeating-linear-gradient(0deg, rgba(255,255,255,0.6) 0 1px, transparent 1px 6px),
+                repeating-linear-gradient(90deg, rgba(255,255,255,0.6) 0 1px, transparent 1px 6px);
+        }
+        .disco .ball::after {
+            content: ''; position: absolute; top: 0; bottom: 0; width: 30%; left: -40%;
+            background: linear-gradient(100deg, transparent, rgba(255,255,255,0.95), transparent);
+            animation: glint 3.2s linear infinite;
+            animation-delay: var(--d, 0s);
+        }
+        @keyframes sway { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
+        @keyframes glint { 0% { left: -40%; } 60%, 100% { left: 130%; } }
+
+        /* --- MINI REPRODUCTOR --- */
         .mini-player-container {
             max-width: 280px;
-            margin: 0 auto 30px auto;
+            margin: 0 auto 10px auto;
             text-align: center;
         }
-        
+
         .player-hint {
             font-family: 'Montserrat', sans-serif;
             font-size: 10px;
@@ -247,7 +305,6 @@
             left: 0%;
         }
 
-        /* Input range invisible para controlar la barra */
         input[type=range] {
             position: absolute;
             top: -10px; left: 0;
@@ -274,7 +331,6 @@
             transition: opacity 0.3s;
         }
         .control-icon:hover { opacity: 1; }
-        
         .control-icon.small { width: 14px; height: 14px; }
 
         .btn-play-circle {
@@ -291,23 +347,23 @@
             transition: transform 0.3s ease;
         }
         .btn-play-circle:hover { transform: scale(1.08); }
-        .btn-play-circle svg {
-            width: 20px; height: 20px; fill: #fff;
-        }
+        .btn-play-circle svg { width: 20px; height: 20px; fill: #fff; }
 
-        /* --- FOTO HERO DESPUÉS DEL HEADER --- */
-        .hero-photo-frame {
+        /* --- FOTO FINAL (antes era la foto hero) --- */
+        .final-photo {
             position: relative;
-            width: calc(100% + (2 * var(--frame-pad)));
-            margin: 10px calc(-1 * var(--frame-pad)) 30px;
-            border-radius: 0 0 32px 32px;
+            margin: 34px auto 14px;
+            max-width: 100%;
+            border-radius: 999px 999px 22px 22px;
             overflow: hidden;
+            border: 5px solid #fff;
+            outline: 1px solid var(--main-secondary);
+            outline-offset: 4px;
             box-shadow: 0 18px 40px rgba(183, 110, 121, 0.28);
-            max-width: calc(100% + (2 * var(--frame-pad)));
         }
-        .hero-photo {
+        .final-photo img {
             width: 100%;
-            height: 400px;
+            height: 440px;
             object-fit: cover;
             object-position: center top;
             display: block;
@@ -325,7 +381,7 @@
 
         .phrase {
             font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--text-dark);
-            line-height: 1.6; margin-bottom: 30px; padding: 0 6px; font-style: italic;
+            line-height: 1.6; margin: 10px 0 30px; padding: 0 6px; font-style: italic;
         }
 
         .divider {
@@ -349,19 +405,20 @@
         .invitation-photo {
             width: 100%; height: auto; border-radius: 16px; box-shadow: 0 12px 28px rgba(183, 110, 121, 0.22);
             margin: 22px 0 4px; filter: saturate(1.08) contrast(103%); border: 4px solid #fff;
+            outline: 1px solid var(--main-secondary); outline-offset: 3px;
         }
 
-        /* TARJETAS SECCIONALES (Cards) */
+        /* TARJETAS SECCIONALES: papel crema con doble línea fina */
         .section-card {
-            position: relative; border-radius: 24px; padding: 32px 20px 26px; margin: 30px 0; overflow: hidden; isolation: isolate;
+            position: relative; border-radius: 22px; padding: 34px 20px 28px; margin: 30px 0; overflow: hidden; isolation: isolate;
+            border: 1px solid rgba(197, 143, 135, 0.5);
         }
-        .section-pink { background: linear-gradient(155deg, var(--pink-1) 0%, var(--pink-2) 100%); box-shadow: 0 10px 26px rgba(244, 166, 190, 0.2); }
-        .section-rg { background: linear-gradient(155deg, var(--rg-1) 0%, var(--rg-2) 100%); box-shadow: 0 10px 26px rgba(197, 143, 135, 0.22); }
         .section-card::before {
-            content: ''; position: absolute; width: 130px; height: 130px; border-radius: 50%; filter: blur(6px); opacity: 0.5; z-index: -1;
+            content: ''; position: absolute; inset: 6px; border: 1px solid rgba(197, 143, 135, 0.35);
+            border-radius: 17px; pointer-events: none; z-index: -1;
         }
-        .section-pink::before { background: var(--rg-3); top: -45px; right: -35px; }
-        .section-rg::before { background: var(--pink-3); bottom: -45px; left: -35px; }
+        .section-pink { background: linear-gradient(155deg, #fffafb 0%, var(--pink-1) 100%); box-shadow: 0 10px 26px rgba(244, 166, 190, 0.18); }
+        .section-rg { background: linear-gradient(155deg, #fffcfa 0%, var(--rg-1) 100%); box-shadow: 0 10px 26px rgba(197, 143, 135, 0.2); }
 
         /* CUENTA REGRESIVA */
         .countdown-container { display: flex; justify-content: center; gap: 8px; margin: 22px 0; flex-wrap: nowrap; }
@@ -375,10 +432,11 @@
         .countdown-box:nth-child(even) .countdown-number { color: var(--main-secondary); }
         .countdown-label { font-size: clamp(8px, 2.4vw, 10px); text-transform: uppercase; color: var(--text-muted); margin-top: 5px; letter-spacing: 1px; font-weight: 600; white-space: nowrap; }
 
-        /* CALENDARIO ESTÉTICO */
+        /* CALENDARIO */
         .calendar-container {
             width: 100%; max-width: 320px; margin: 0 auto 22px auto; background: linear-gradient(160deg, var(--pink-1) 0%, var(--rg-1) 100%);
             padding: 18px 14px; border-radius: 16px; box-shadow: 0 10px 24px rgba(244, 166, 190, 0.18);
+            border: 1px solid rgba(197, 143, 135, 0.4);
         }
         .calendar-month { font-family: 'Cinzel', serif; font-size: 17px; color: var(--main-primary-deep); margin-bottom: 14px; letter-spacing: 2px; text-transform: uppercase; font-weight: bold; }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; font-size: 13px; }
@@ -387,7 +445,7 @@
         .calendar-day.active { background: linear-gradient(135deg, var(--main-primary), var(--main-secondary)); color: #fff; font-weight: bold; box-shadow: 0 0 14px var(--glow); }
         .calendar-day.empty { color: transparent; }
 
-        /* BOTONES GOLD */
+        /* BOTONES */
         .btn-gold {
             display: inline-block; color: #fff; border: none; padding: 15px 28px;
             font-family: 'Cinzel', serif; font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-decoration: none;
@@ -437,7 +495,7 @@
         .ticket-body { padding: 10px 0; }
         .ticket-footer { font-size: 11px; color: var(--main-primary-deep); margin-top: 20px; border-top: 1px dashed var(--main-primary); padding-top: 15px; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; }
 
-        /* EFECTOS Y ANIMACIONES SCROLL/BACKGROUND */
+        /* EFECTOS Y ANIMACIONES */
         #decorations-container {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none; z-index: 100; overflow: hidden;
@@ -464,12 +522,16 @@
         .reveal-scale.visible { opacity: 1; transform: scale(1); }
 
         @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
-        
+
         @keyframes fall {
             0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
             10% { opacity: 0.8; }
             90% { opacity: 0.8; }
             100% { transform: translateY(110vh) translateX(20px) rotate(360deg); opacity: 0; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .disco, .disco .ball::after { animation: none; }
         }
 
         @media (max-width: 400px) {
@@ -480,16 +542,60 @@
             .front-flap { border-left-width: 142px; border-right-width: 142px; border-top-width: 105px; }
             .wax-seal { top: 88px; }
             .invitation-frame { padding: 30px 10px 24px; }
+            .invitation-frame > .flora { --fs: 110px; }
             .section-card { padding: 24px 14px 20px; }
             .names-cursive { font-size: 32px; }
             #music-btn { bottom: 20px; right: 20px; width: 48px; height: 48px; }
             #music-btn svg { width: 20px; height: 20px; }
             .map-container, .spotify-container { height: 210px; }
-            .hero-name-main { font-size: clamp(40px, 11vw, 55px); }
+            .hero-name-main { font-size: clamp(34px, 10vw, 48px); }
+            .final-photo img { height: 380px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- DEFINICIONES SVG REUTILIZABLES (flor y esquina floral) -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+            <symbol id="flower" viewBox="-12 -12 24 24">
+                <g>
+                    <ellipse cx="0" cy="-6" rx="3.8" ry="6.2"/>
+                    <ellipse cx="0" cy="-6" rx="3.8" ry="6.2" transform="rotate(72)"/>
+                    <ellipse cx="0" cy="-6" rx="3.8" ry="6.2" transform="rotate(144)"/>
+                    <ellipse cx="0" cy="-6" rx="3.8" ry="6.2" transform="rotate(216)"/>
+                    <ellipse cx="0" cy="-6" rx="3.8" ry="6.2" transform="rotate(288)"/>
+                </g>
+                <circle r="2.6" fill="#f6d98a"/>
+                <circle r="1.1" fill="#e2b95a"/>
+            </symbol>
+
+            <symbol id="flora" viewBox="0 0 140 140">
+                <path d="M0 46C30 52 62 36 92 6" fill="none" stroke="#8fae8a" stroke-width="1.5"/>
+                <path d="M12 0C18 40 48 70 96 92" fill="none" stroke="#8fae8a" stroke-width="1.5"/>
+                <g fill="#a9c2a0">
+                    <ellipse cx="34" cy="44" rx="13" ry="4.5" transform="rotate(-25 34 44)"/>
+                    <ellipse cx="62" cy="30" rx="12" ry="4.5" transform="rotate(-40 62 30)"/>
+                    <ellipse cx="28" cy="62" rx="12" ry="4.5" transform="rotate(50 28 62)"/>
+                    <ellipse cx="60" cy="72" rx="13" ry="4.5" transform="rotate(35 60 72)"/>
+                    <ellipse cx="88" cy="86" rx="11" ry="4" transform="rotate(25 88 86)"/>
+                    <ellipse cx="84" cy="14" rx="10" ry="4" transform="rotate(-55 84 14)"/>
+                </g>
+                <g fill="#cdb8e6">
+                    <ellipse cx="74" cy="42" rx="3.5" ry="5"/><ellipse cx="76" cy="52" rx="3.2" ry="4.6"/>
+                    <ellipse cx="75" cy="61" rx="3" ry="4.2"/><ellipse cx="77" cy="69" rx="2.5" ry="3.6"/>
+                    <ellipse cx="102" cy="22" rx="3.3" ry="4.8"/><ellipse cx="103" cy="31" rx="3" ry="4.4"/>
+                    <ellipse cx="102" cy="39" rx="2.6" ry="3.8"/>
+                    <ellipse cx="46" cy="100" rx="3.2" ry="4.6"/><ellipse cx="47" cy="109" rx="2.8" ry="4"/>
+                </g>
+                <use href="#flower" x="2" y="38" width="38" height="38" fill="#f4a6be"/>
+                <use href="#flower" x="36" y="0" width="34" height="34" fill="#fabbcc"/>
+                <use href="#flower" x="50" y="50" width="30" height="30" fill="#e98fa9"/>
+                <use href="#flower" x="6" y="82" width="26" height="26" fill="#ffdce6"/>
+                <use href="#flower" x="80" y="0" width="24" height="24" fill="#fff0f4"/>
+            </symbol>
+        </defs>
+    </svg>
 
     <!-- CAJA DE DECORACIONES (Flores y destellos) -->
     <div id="decorations-container"></div>
@@ -521,15 +627,26 @@
         <div class="invitation-frame">
             <div class="frame-inner-border">
 
-            <!-- HERO HEADER ESTILO IMAGEN (Texto limpio + Reproductor) -->
+            <!-- HERO: ARCO DE FLORES + BOLAS DISCO + REPRODUCTOR -->
             <div class="hero-header reveal">
-                <div class="hero-script">Mis XV años</div>
-                <h1 class="hero-name-main">XIMENA</h1>
-                
+
+                <!-- Bolas disco colgantes -->
+                <div class="disco l" style="--x: 1%; --s: 42px; --l: 80px; --d: 0s;"><div class="ball"></div></div>
+                <div class="disco l" style="--x: 15%; --s: 26px; --l: 28px; --d: -1.6s;"><div class="ball"></div></div>
+                <div class="disco r" style="--x: 1%; --s: 48px; --l: 60px; --d: -2.4s;"><div class="ball"></div></div>
+                <div class="disco r" style="--x: 17%; --s: 28px; --l: 24px; --d: -0.8s;"><div class="ball"></div></div>
+
+                <!-- Arco de flores con el título -->
+                <div class="hero-arch">
+                    <svg class="arch-svg" id="arch-svg" viewBox="0 0 400 230" aria-hidden="true"></svg>
+                    <div class="hero-script">Mis XV años</div>
+                    <h1 class="hero-name-main">XIMENA</h1>
+                </div>
+
                 <!-- MINI REPRODUCTOR -->
                 <div class="mini-player-container">
                     <div class="player-hint">Presioná PLAY para reproducir la canción</div>
-                    
+
                     <div class="player-progress-wrapper">
                         <input type="range" id="song-progress" value="0" min="0" max="100">
                         <div class="player-progress-fill" id="progress-fill"></div>
@@ -537,32 +654,18 @@
                     </div>
 
                     <div class="player-controls">
-                        <!-- Shuffle icon -->
                         <svg viewBox="0 0 24 24" class="control-icon small"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>
-                        
-                        <!-- Prev icon -->
                         <svg viewBox="0 0 24 24" class="control-icon"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-                        
-                        <!-- Play/Pause Btn -->
                         <button class="btn-play-circle" id="mini-play-btn" onclick="toggleMusic()">
                             <svg viewBox="0 0 24 24" id="mini-play-icon-svg"><path d="M8 5v14l11-7z"/></svg>
                         </button>
-                        
-                        <!-- Next icon -->
                         <svg viewBox="0 0 24 24" class="control-icon"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-                        
-                        <!-- Repeat icon -->
                         <svg viewBox="0 0 24 24" class="control-icon small"><path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/></svg>
                     </div>
                 </div>
             </div>
 
-            <!-- FOTO 1 - PORTADA (Movida abajo del reproductor) -->
-            <div class="hero-photo-frame reveal-scale">
-                <img src="assets/1.jpg" alt="Ximena" class="hero-photo">
-            </div>
-
-            <!-- FRASE -->
+            <!-- FRASE (justo debajo del reproductor) -->
             <p class="phrase reveal">
                 Hay noches que se viven una vez y se recuerdan toda la vida. Espero que seas parte de la mía.
             </p>
@@ -712,7 +815,7 @@
                     </div>
                     <a href="https://maps.app.goo.gl/PUAzHFShGX9bby3H7?g_st=ic" target="_blank" class="btn-gold">Abrir en GPS</a>
                 </div>
-                
+
                 <img src="assets/2.jpg" alt="Momentos Especiales" class="invitation-photo reveal-scale" style="margin-top: 20px;">
             </div>
 
@@ -757,7 +860,7 @@
                     <div style="font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-dark); padding: 0 10px; margin-bottom: 18px; line-height: 1.5;">
                         Ayúdame a crear el ambiente perfecto agregando tus canciones favoritas para la pista de baile.
                     </div>
-                    
+
                     <div class="spotify-container">
                         <iframe src="https://open.spotify.com/embed/playlist/0pL7Hcw8WXmdUgkyUplTPS?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" style="border: none;"></iframe>
                     </div>
@@ -779,7 +882,7 @@
                     </div>
                     <a href="https://drive.google.com/drive/folders/1P2vl7yCJAsljFdBq2ghHEpXP1hjLc4QY?usp=sharing" target="_blank" class="btn-gold">Subir mis Fotos</a>
                 </div>
-                
+
                 <img src="assets/4.jpg" alt="Momentos en vivo" class="invitation-photo reveal-scale" style="margin-top: 20px;">
             </div>
 
@@ -818,7 +921,7 @@
                 <div class="info-block">
                     <div class="info-label">Confirmación de Asistencia</div>
                     <div style="font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-dark); margin-bottom: 20px;">Agradeceremos tu confirmación lo antes posible vía WhatsApp.</div>
-                    
+
                     <div class="form-container">
                         <input type="text" id="rsvp-name" class="form-input" placeholder="Escribe tu nombre completo">
                         <select id="rsvp-status" class="form-input" onchange="toggleGuestInput()">
@@ -827,7 +930,7 @@
                             <option value="no">No me será posible asistir</option>
                         </select>
                         <input type="number" id="rsvp-guests" class="form-input" placeholder="¿Cuántas personas asistirán?" min="1" style="display: none;">
-                        
+
                         <button onclick="sendRSVP()" class="btn-gold" style="font-size: 15px; padding: 15px; width: 100%;">Confirmar Asistencia</button>
                     </div>
                 </div>
@@ -847,6 +950,11 @@
                         <button onclick="sendWish()" class="btn-gold" style="font-size: 15px; padding: 15px; width: 100%;">Enviar Mensaje</button>
                     </div>
                 </div>
+            </div>
+
+            <!-- FOTO FINAL (la antigua foto hero, ahora al cierre) -->
+            <div class="final-photo reveal-scale">
+                <img src="assets/1.jpg" alt="Ximena">
             </div>
 
             <div style="font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 3px; color: var(--main-secondary); margin-top: 15px; font-weight: bold;">
@@ -874,14 +982,66 @@
             if (pasesAsignados > 0) {
                 document.getElementById('pases-section').style.display = 'block';
                 document.getElementById('ticket-count').innerText = pasesAsignados;
-                
+
                 const rsvpGuestsInput = document.getElementById('rsvp-guests');
                 rsvpGuestsInput.max = pasesAsignados;
                 rsvpGuestsInput.placeholder = `¿Cuántas personas asistirán? (Máximo ${pasesAsignados})`;
             }
 
+            buildArch();
+            addFlora();
             setupScrollReveal();
         });
+
+        // ARCO DE FLORES (se dibuja en el SVG del hero)
+        function buildArch() {
+            const svg = document.getElementById('arch-svg');
+            const cx = 200, cy = 195, rx = 175, ry = 165;
+            const colors = ['#f4a6be', '#fabbcc', '#ffdce6', '#e98fa9', '#fff0f4'];
+            const pos = (a, k = 1) => {
+                const r = a * Math.PI / 180;
+                return [cx + rx * k * Math.cos(r), cy - ry * k * Math.sin(r)];
+            };
+            let h = '<path d="M25 195A175 165 0 0 1 375 195" fill="none" stroke="#8fae8a" stroke-width="3" opacity=".85"/>';
+
+            // Hojas a lo largo del arco
+            for (let a = 180, i = 0; a >= 0; a -= 7.5, i++) {
+                const [x, y] = pos(a, i % 2 ? 1.04 : 0.96);
+                const rot = 90 - a + (i % 2 ? 38 : -38);
+                h += `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="13" ry="4.6" fill="${i % 3 ? '#a9c2a0' : '#8fae8a'}" transform="rotate(${rot.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})"/>`;
+            }
+
+            // Glicinias lilas colgando
+            [165, 120, 60, 15].forEach(a => {
+                const [x, y] = pos(a, 0.97);
+                for (let j = 0; j < 4; j++) {
+                    h += `<ellipse cx="${(x + (j % 2 ? 2 : -2)).toFixed(1)}" cy="${(y + 10 + j * 9).toFixed(1)}" rx="${(4.2 - j * 0.6).toFixed(1)}" ry="${(5.6 - j * 0.7).toFixed(1)}" fill="#cdb8e6" opacity=".95"/>`;
+                }
+            });
+
+            // Flores
+            for (let a = 180, i = 0; a >= 0; a -= 15, i++) {
+                const big = (a === 135 || a === 45);
+                const size = big ? 46 : (i % 3 === 0 ? 34 : 28);
+                const [x, y] = pos(a);
+                h += `<use href="#flower" x="${(x - size / 2).toFixed(1)}" y="${(y - size / 2).toFixed(1)}" width="${size}" height="${size}" fill="${colors[i % colors.length]}"/>`;
+            }
+            // Flores pequeñas de relleno
+            for (let a = 172, i = 0; a >= 0; a -= 15, i++) {
+                const [x, y] = pos(a, i % 2 ? 1.06 : 0.94);
+                h += `<use href="#flower" x="${(x - 10).toFixed(1)}" y="${(y - 10).toFixed(1)}" width="20" height="20" fill="${colors[(i + 2) % colors.length]}"/>`;
+            }
+            svg.innerHTML = h;
+        }
+
+        // FLORES EN LAS ESQUINAS DE LOS MARCOS
+        function addFlora() {
+            const mk = (c) => `<svg class="flora ${c}" viewBox="0 0 140 140" aria-hidden="true"><use href="#flora"/></svg>`;
+            document.querySelector('.invitation-frame').insertAdjacentHTML('afterbegin', ['tl', 'tr', 'bl', 'br'].map(mk).join(''));
+            document.querySelectorAll('.section-card').forEach(card => {
+                card.insertAdjacentHTML('afterbegin', mk('tl') + mk('br'));
+            });
+        }
 
         // CONTROL DE MÚSICA Y MINI REPRODUCTOR
         const bgMusic = document.getElementById('bg-music');
@@ -891,16 +1051,16 @@
         const progressFill = document.getElementById('progress-fill');
         const progressThumb = document.getElementById('progress-thumb');
         let isMusicPlaying = false;
-        
+
         const playPath = '<path d="M8 5v14l11-7z"/>';
         const pausePath = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
 
         function toggleMusic() {
-            if (isMusicPlaying) { 
-                bgMusic.pause(); 
+            if (isMusicPlaying) {
+                bgMusic.pause();
                 updatePlayIcons(playPath);
-            } else { 
-                bgMusic.play(); 
+            } else {
+                bgMusic.play();
                 updatePlayIcons(pausePath);
             }
             isMusicPlaying = !isMusicPlaying;
@@ -911,7 +1071,6 @@
             miniPlayIconSvg.innerHTML = path;
         }
 
-        // Actualizar barra de progreso del mini reproductor
         bgMusic.addEventListener('timeupdate', () => {
             if (bgMusic.duration) {
                 const percent = (bgMusic.currentTime / bgMusic.duration) * 100;
@@ -921,7 +1080,6 @@
             }
         });
 
-        // Buscar canción al mover el slider
         songProgress.addEventListener('input', (e) => {
             if (bgMusic.duration) {
                 const seekTo = bgMusic.duration * (e.target.value / 100);
@@ -966,19 +1124,16 @@
             targets.forEach(t => observer.observe(t));
         }
 
-        // EFECTO DE DECORACIONES CAYENDO (Flores/Brillos/Confeti)
+        // DECORACIONES CAYENDO (Flores/Brillos/Confeti)
         function createDecorations() {
             const container = document.getElementById('decorations-container');
             const shapes = [
-                // Brillo pequeño
                 '<svg viewBox="0 0 24 24" fill="#fabbcc"><path d="M12 2L9 9H2L7 14L5 21L12 17L19 21L17 14L22 9H15L12 2Z"/></svg>',
-                // Pétalo/Hoja abstracta
                 '<svg viewBox="0 0 24 24" fill="#f4a6be"><path d="M12 2C8.69 2 6 4.69 6 8C6 11.31 12 22 12 22C12 22 18 11.31 18 8C18 4.69 15.31 2 12 2Z"/></svg>',
-                // Círculo confeti
                 '<svg viewBox="0 0 24 24" fill="#c58f87"><circle cx="12" cy="12" r="6"/></svg>'
             ];
-            
-            const count = 25; // Cantidad de elementos cayendo
+
+            const count = 25;
 
             for (let i = 0; i < count; i++) {
                 const el = document.createElement('div');
@@ -987,15 +1142,13 @@
                 const left = Math.random() * 100;
                 const animDuration = Math.random() * 10 + 8;
                 const animDelay = Math.random() * 10;
-                
+
                 el.innerHTML = shapes[Math.floor(Math.random() * shapes.length)];
                 el.style.width = `${size}px`;
                 el.style.height = `${size}px`;
                 el.style.left = `${left}%`;
                 el.style.animationDuration = `${animDuration}s`;
                 el.style.animationDelay = `${animDelay}s`;
-                
-                // Opacidad aleatoria para dar profundidad
                 el.style.opacity = (Math.random() * 0.5 + 0.3).toString();
 
                 container.appendChild(el);
@@ -1065,12 +1218,12 @@
         function sendWish() {
             const name = document.getElementById("wish-name").value.trim();
             const wish = document.getElementById("wish-message").value.trim();
-            
-            if (name === "" || wish === "") { 
-                alert("Por favor, ingresa tu nombre y un lindo mensaje."); 
-                return; 
+
+            if (name === "" || wish === "") {
+                alert("Por favor, ingresa tu nombre y un lindo mensaje.");
+                return;
             }
-            
+
             const message = encodeURIComponent(`Hola Ximena, soy ${name}. Te envío este mensaje con mucho cariño:\n\n"${wish}"`);
             window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
         }
