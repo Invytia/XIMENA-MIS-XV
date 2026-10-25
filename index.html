@@ -246,7 +246,10 @@
         @keyframes sway { from { rotate: -6deg; } to { rotate: 6deg; } }
 
         /* --- MINI REPRODUCTOR --- */
-        \1flex: 1 1 0;\n            min-width: 0;\n            max-width: 220px;
+        .mini-player-container {
+            flex: 1 1 0;
+            min-width: 0;
+            max-width: 220px;
             text-align: center;
         }
 
@@ -336,7 +339,7 @@
         .btn-play-circle:hover { transform: scale(1.08); }
         .btn-play-circle svg { width: 20px; height: 20px; fill: #fff; }
 
-        /* --- FOTO FINAL (antes era la foto hero) --- */
+        /* --- FOTO FINAL --- */
         .final-photo {
             position: relative;
             margin: 34px auto 14px;
@@ -395,7 +398,7 @@
             outline: 1px solid var(--main-secondary); outline-offset: 3px;
         }
 
-        /* TARJETAS SECCIONALES: papel crema con doble línea fina */
+        /* TARJETAS SECCIONALES */
         .section-card {
             position: relative; border-radius: 22px; padding: 34px 20px 28px; margin: 30px 0; overflow: hidden; isolation: isolate;
             border: 1px solid rgba(197, 143, 135, 0.5);
@@ -605,7 +608,7 @@
                 </div>
             </div>
 
-            <!-- FRASE (justo debajo del reproductor) -->
+            <!-- FRASE -->
             <p class="phrase reveal">
                 Hay noches que se viven una vez y se recuerdan toda la vida. Espero que seas parte de la mía.
             </p>
@@ -741,7 +744,7 @@
                 </div>
             </div>
 
-            <!-- RECEPCIÓN + FOTO 2 -->
+            <!-- RECEPCIÓN -->
             <div class="section-card section-pink reveal">
                 <div class="icon-badge badge-pink">
                     <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4z"/></svg>
@@ -755,11 +758,10 @@
                     </div>
                     <a href="https://maps.app.goo.gl/PUAzHFShGX9bby3H7?g_st=ic" target="_blank" class="btn-gold">Abrir en GPS</a>
                 </div>
-
                 <img src="assets/2.jpg" alt="Momentos Especiales" class="invitation-photo reveal-scale" style="margin-top: 20px;">
             </div>
 
-            <!-- DRESS CODE + FOTO 3 -->
+            <!-- DRESS CODE -->
             <div class="section-card section-rg reveal-scale">
                 <div class="icon-badge badge-rg">
                     <svg viewBox="0 0 24 24" fill="#fff"><path d="M16 2l-4 3-4-3-6 4 3 4h2v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9h2l3-4z"/></svg>
@@ -771,7 +773,6 @@
                         Se solicita amablemente reservar el color <span style="color: var(--main-primary-deep); font-weight: bold;">Rosa</span> exclusivamente para la quinceañera.
                     </div>
                 </div>
-
                 <img src="assets/3.jpg" alt="Dress Code" class="invitation-photo reveal-scale" style="margin-top: 15px;">
             </div>
 
@@ -800,16 +801,14 @@
                     <div style="font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-dark); padding: 0 10px; margin-bottom: 18px; line-height: 1.5;">
                         Ayúdame a crear el ambiente perfecto agregando tus canciones favoritas para la pista de baile.
                     </div>
-
                     <div class="spotify-container">
                         <iframe src="https://open.spotify.com/embed/playlist/0pL7Hcw8WXmdUgkyUplTPS?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" style="border: none;"></iframe>
                     </div>
-
                     <a href="https://open.spotify.com/playlist/0pL7Hcw8WXmdUgkyUplTPS?si=f571335117784e8f&pt=84f44fcde1345ead13bbce26201b207b" target="_blank" class="btn-gold">Agregar Canciones</a>
                 </div>
             </div>
 
-            <!-- GALERÍA DRIVE + FOTO 4 -->
+            <!-- GALERÍA DRIVE -->
             <div class="section-card section-pink reveal">
                 <div class="icon-badge badge-pink">
                     <svg viewBox="0 0 24 24" fill="#fff"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm16 2H4v1.97l8 4.66 8-4.66V6zm0 12v-8.46l-8 4.66-8-4.66V18h16z"/></svg>
@@ -822,11 +821,10 @@
                     </div>
                     <a href="https://drive.google.com/drive/folders/1P2vl7yCJAsljFdBq2ghHEpXP1hjLc4QY?usp=sharing" target="_blank" class="btn-gold">Subir mis Fotos</a>
                 </div>
-
                 <img src="assets/4.jpg" alt="Momentos en vivo" class="invitation-photo reveal-scale" style="margin-top: 20px;">
             </div>
 
-            <!-- BOLETO / PASES VIP -->
+            <!-- BOLETO / PASES VIP (SECCIÓN DINÁMICA DE INVITADOS) -->
             <div class="section-card section-rg reveal-scale" id="pases-section" style="display: none;">
                 <div class="icon-badge badge-rg">
                     <svg viewBox="0 0 24 24" fill="#fff"><path d="M5 17.5c0-.28.22-.5.5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM3.5 8.2a1 1 0 0 1 1.55-.83L8 9.3l3.15-4.62a1 1 0 0 1 1.7 0L16 9.3l2.95-1.93a1 1 0 0 1 1.55.83L19.6 16H4.4L3.5 8.2z"/></svg>
@@ -843,8 +841,8 @@
                                 <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: var(--main-primary); vertical-align: bottom; margin-left: 5px;"><path d="M5 17.5c0-.28.22-.5.5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5zM3.5 8.2a1 1 0 0 1 1.55-.83L8 9.3l3.15-4.62a1 1 0 0 1 1.7 0L16 9.3l2.95-1.93a1 1 0 0 1 1.55.83L19.6 16H4.4L3.5 8.2z"/></svg>
                             </div>
                             <div class="ticket-body">
-                                <div style="font-family: 'Cinzel', serif; font-size: 21px; color: var(--main-primary-deep); margin-bottom: 15px; font-weight: bold; letter-spacing: 1px;">INVITADO ESPECIAL</div>
-                                <div style="font-family: 'Montserrat', sans-serif; font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Pases Reservados</div>
+                                <div id="ticket-guest-name" style="font-family: 'Cinzel', serif; font-size: 21px; color: var(--main-primary-deep); margin-bottom: 15px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;">INVITADO ESPECIAL</div>
+                                <div id="ticket-type" style="font-family: 'Montserrat', sans-serif; font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">Pases Reservados</div>
                                 <div id="ticket-count" style="font-family: 'Cinzel', serif; font-weight: 700; font-size: 55px; color: var(--main-primary-deep); line-height: 1; text-shadow: 0 0 15px var(--glow-gold);">0</div>
                             </div>
                             <div class="ticket-footer">Toma captura de pantalla y presenta este pase al llegar al evento</div>
@@ -892,7 +890,7 @@
                 </div>
             </div>
 
-            <!-- FOTO FINAL (la antigua foto hero, ahora al cierre) -->
+            <!-- FOTO FINAL -->
             <div class="final-photo reveal-scale">
                 <img src="assets/1.jpg" alt="Ximena">
             </div>
@@ -910,18 +908,53 @@
         const phoneNumber = "524421213542";
         let pasesAsignados = 0;
 
+        // BASE DE DATOS DE INVITADOS (Integrada de Lista_de_invitados.xlsx)
+        const guestDatabase = {"1": {"nombre": "Fermin Quillo y esposa", "pases": 2}, "2": {"nombre": "Rayo Herrera", "pases": 3}, "3": {"nombre": "Antonio Herrera", "pases": 1}, "4": {"nombre": "Javier Herrera y esposa", "pases": 2}, "5": {"nombre": "Efrain Herrera y esposa", "pases": 2}, "6": {"nombre": "Gustavo Herrera y familia", "pases": 3}, "7": {"nombre": "Concepción Herrera", "pases": 1}, "8": {"nombre": "Cruz Aguilar", "pases": 2}, "9": {"nombre": "Señor Dolores Herrera", "pases": 4}, "10": {"nombre": "Jaime Herrera y pareja", "pases": 2}, "11": {"nombre": "Alfredo Galindo y familia", "pases": 5}, "12": {"nombre": "Lupita Quillo y pareja", "pases": 2}, "13": {"nombre": "Hector Herrera y esposa", "pases": 3}, "14": {"nombre": "Daniel Herrera y familia", "pases": 5}, "15": {"nombre": "Familia Morales Herrrera", "pases": 4}, "16": {"nombre": "Adilene Herrera y familia", "pases": 4}, "17": {"nombre": "Magali Herrera y familia", "pases": 4}, "18": {"nombre": "Efrain Herrera y familia", "pases": 5}, "19": {"nombre": "Miriam Brito y familia", "pases": 3}, "20": {"nombre": "Alejandra Brito y pareja", "pases": 2}, "21": {"nombre": "Gustavo Herrera y esposa", "pases": 2}, "22": {"nombre": "Mariana Herrera y familia", "pases": 4}, "23": {"nombre": "Familia Rivera Torres", "pases": 4}, "24": {"nombre": "Rosy Castañon y familia", "pases": 4}, "25": {"nombre": "Dolores Castañon y familia", "pases": 3}, "26": {"nombre": "Patricia Castañon y familia", "pases": 4}, "27": {"nombre": "Miriam Pacheco", "pases": 2}, "28": {"nombre": "Daniel Pacheco y familia", "pases": 6}, "29": {"nombre": "Alfonso Mejia y esposa", "pases": 2}, "30": {"nombre": "Sayuri Mejia y familia", "pases": 4}, "31": {"nombre": "Francisco Mejia y esposa", "pases": 2}, "32": {"nombre": "Alejandro Mejia y esposa", "pases": 4}, "33": {"nombre": "Norma Tellez y esposo", "pases": 2}, "34": {"nombre": "Karina Tellez y pareja", "pases": 2}, "35": {"nombre": "Marcela Tellez y familia", "pases": 3}, "36": {"nombre": "Claudia Tellez y esposo", "pases": 2}, "37": {"nombre": "Familia Rivera Rios", "pases": 4}, "38": {"nombre": "Fernando Suarez y familia", "pases": 3}, "39": {"nombre": "Andres Lombana y esposa", "pases": 2}, "40": {"nombre": "Uriel de la Torre y familia", "pases": 2}, "41": {"nombre": "Sr.Trinidad y pareja", "pases": 2}, "42": {"nombre": "Ernesto Salinas", "pases": 2}, "43": {"nombre": "Eduardo Serrato", "pases": 2}, "44": {"nombre": "Eduardo Serrato y pareja", "pases": 2}, "45": {"nombre": "Erick Gonzalez y pareja", "pases": 2}, "46": {"nombre": "Erick Salinas", "pases": 1}, "47": {"nombre": "Marina Salinas", "pases": 3}, "48": {"nombre": "Mario Moya", "pases": 2}, "49": {"nombre": "Francisco Gonzalez y esposa", "pases": 2}, "50": {"nombre": "Felipe Pacheco y esposa", "pases": 2}, "51": {"nombre": "Gloria Perez", "pases": 1}, "52": {"nombre": "Israel Pacheco y familia", "pases": 3}, "53": {"nombre": "Nestor Pacheco y esposa", "pases": 2}, "54": {"nombre": "Maricarmen Pacheco y familia", "pases": 4}, "55": {"nombre": "Rigoberto Perez y familia", "pases": 6}, "56": {"nombre": "Alejandro Perez y pareja", "pases": 2}, "57": {"nombre": "Alexia y familia", "pases": 3}, "58": {"nombre": "Jesus Avila y pareja", "pases": 4}, "59": {"nombre": "Gerardo Perez y familia", "pases": 5}, "60": {"nombre": "Carlos Olmos y familia", "pases": 4}, "61": {"nombre": "Adriana Guerrero", "pases": 1}, "62": {"nombre": "Lorena Avila y familia", "pases": 3}, "63": {"nombre": "Liliana Arredondo", "pases": 3}, "64": {"nombre": "Gabriela Hernandez", "pases": 2}, "65": {"nombre": "Fabiola Martinez", "pases": 1}, "66": {"nombre": "Alma Sanchez y familia", "pases": 4}, "67": {"nombre": "Rolando Chavez y familia", "pases": 5}, "68": {"nombre": "Erika Mendoza", "pases": 2}, "69": {"nombre": "Claudia Castañeda y familia", "pases": 3}, "70": {"nombre": "Victor Velazquez y familia", "pases": 4}, "71": {"nombre": "Cecilia Tress", "pases": 2}, "72": {"nombre": "Monica German", "pases": 2}, "73": {"nombre": "Juan Manuel Flores y familia", "pases": 4}, "74": {"nombre": "Lupita Farriols y familia", "pases": 3}, "75": {"nombre": "Pamela Ramos y familia", "pases": 3}, "76": {"nombre": "Ventura Meza y familia", "pases": 5}, "77": {"nombre": "Perla Contreras y familia", "pases": 3}, "78": {"nombre": "Pablo", "pases": 1}, "79": {"nombre": "Iker", "pases": 1}, "80": {"nombre": "Maximiliano", "pases": 1}, "82": {"nombre": "Fernanda", "pases": 1}, "83": {"nombre": "Mateo", "pases": 1}, "84": {"nombre": "Sara", "pases": 1}, "85": {"nombre": "Zoe", "pases": 1}, "86": {"nombre": "Karol", "pases": 1}, "87": {"nombre": "Patricio", "pases": 1}, "88": {"nombre": "Renata Gomez", "pases": 1}, "89": {"nombre": "Daniela Canedo", "pases": 1}, "90": {"nombre": "Montserrat", "pases": 1}, "91": {"nombre": "Natalia U", "pases": 1}, "92": {"nombre": "Montserrat U", "pases": 1}, "93": {"nombre": "Sophie", "pases": 1}, "94": {"nombre": "Santiago Arriaga", "pases": 1}, "95": {"nombre": "Emma Saldaña", "pases": 1}, "96": {"nombre": "Majo Hernandez", "pases": 1}, "97": {"nombre": "Connie", "pases": 1}, "98": {"nombre": "Luis A", "pases": 1}, "99": {"nombre": "Leonardo O", "pases": 1}, "100": {"nombre": "Estefania Poot", "pases": 1}};
+
         document.addEventListener("DOMContentLoaded", () => {
             // Lógica de Pases Dinámicos por URL
             const urlParams = new URLSearchParams(window.location.search);
-            let parametroPases = urlParams.get('pases') || urlParams.get('p');
+            let guestId = urlParams.get('id') || urlParams.get('p');
 
-            if (parametroPases && !isNaN(parametroPases)) {
-                pasesAsignados = Math.max(0, parseInt(parametroPases));
-            }
+            if (guestId && guestDatabase[guestId]) {
+                // Modo Base de Datos: Nombre exacto y pases asignados
+                let guestData = guestDatabase[guestId];
+                pasesAsignados = guestData.pases;
+                let guestName = guestData.nombre;
 
-            if (pasesAsignados > 0) {
+                document.getElementById('pases-section').style.display = 'block';
+                document.getElementById('ticket-guest-name').innerText = guestName;
+                document.getElementById('ticket-count').innerText = pasesAsignados;
+
+                // Lógica Singular / Plural
+                if (pasesAsignados === 1) {
+                    document.getElementById('ticket-type').innerText = "Pase Reservado";
+                } else {
+                    document.getElementById('ticket-type').innerText = "Pases Reservados";
+                }
+
+                // Autocompletado del RSVP para mayor comodidad
+                document.getElementById('rsvp-name').value = guestName;
+
+                // Restricciones para el Input de Acompañantes en el RSVP
+                const rsvpGuestsInput = document.getElementById('rsvp-guests');
+                rsvpGuestsInput.max = pasesAsignados;
+                rsvpGuestsInput.placeholder = `¿Cuántas personas asistirán? (Máximo ${pasesAsignados})`;
+
+            } else if (guestId && !isNaN(guestId)) {
+                // Compatibilidad de Fallback: por si se pasa solo la cantidad numérica en el enlace (ej: ?p=2)
+                pasesAsignados = Math.max(0, parseInt(guestId));
+                
                 document.getElementById('pases-section').style.display = 'block';
                 document.getElementById('ticket-count').innerText = pasesAsignados;
+                
+                if (pasesAsignados === 1) {
+                    document.getElementById('ticket-guest-name').innerText = "INVITADO ESPECIAL";
+                    document.getElementById('ticket-type').innerText = "Pase Reservado";
+                } else {
+                    document.getElementById('ticket-guest-name').innerText = "INVITADOS ESPECIALES";
+                    document.getElementById('ticket-type').innerText = "Pases Reservados";
+                }
 
                 const rsvpGuestsInput = document.getElementById('rsvp-guests');
                 rsvpGuestsInput.max = pasesAsignados;
@@ -1059,6 +1092,7 @@
                     alert("Por favor, indica un número válido de personas que asistirán.");
                     return;
                 }
+                // Lógica: Se puede confirmar MENOS de los asignados, pero NUNCA MÁS.
                 if (pasesAsignados > 0 && parseInt(guests) > pasesAsignados) {
                     alert(`El límite máximo de tu pase es de ${pasesAsignados} persona(s).`);
                     return;
